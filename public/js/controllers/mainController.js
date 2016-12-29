@@ -1,20 +1,25 @@
 app.controller('MainCtrl', ['$scope','posts', function($scope, posts){
-  $scope.posts = posts;
+  $scope.posts = posts.posts;
 
   $scope.addPost = function() {
     if ($scope.title === '') { return; }
-    $scope.posts.push({
+
+    var newPost = {
       title: $scope.title,
       link: $scope.link,
-      upvotes: 0,
-      comments: [
-        { author: 'Joe', body: 'Cool post!', upvotes: 0 },
-        { author: 'Bob', body: 'Bad post!', upvotes: 3 },
-        { author: 'Jim', body: 'Ok post!', upvotes: 1 }
-      ]
-    });
+      upvotes: 0
+    }
+
     $scope.title = '';
     $scope.link = '';
+
+    posts.create(newPost).then(function(data){
+    	console.log(data.data);
+    	$scope.posts.push(data.data);
+    }).catch(function(err){
+		console.error(err)
+    })
+
   }
 
   $scope.incrementUpvotes = function(item) {
