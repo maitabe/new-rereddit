@@ -14,7 +14,15 @@ router.get('/', function(req, res, next) {
 router.get('/posts', function(req, res, next) {
 	Post.find(function (error, post) {
 		res.send(post);
-	})
+	});
+});
+
+//get specific post from db
+router.get('/posts/:post', function(req, res, next) {
+  console.log(req.post);
+  req.post.populate('comments', function(err,post) {
+    res.send(post);
+  });
 });
 
 //add a new post
@@ -27,7 +35,7 @@ router.post('/posts', function(req, res, next) {
     console.log(post);
     if (err) {
       //next(err);
-      res.json(err)
+      res.json(err);
     }
     else res.json(post);
   });
@@ -62,15 +70,15 @@ router.param('comment', function(req, res, next, id) {
 
 //add new comment to specific post
 router.post('/posts/:post/comments', function(req, res, next) {
-  console.log(req.body);
+  console.log(req.post);
   var comment = new Comment(req.body);
-  // comment.post = req.post;
   comment.post = req.post._id;
 
   comment.save(function(err, comment){
     if(err){ return next(err); }
 
     req.post.comments.push(comment);
+    console.log(req.post);
     req.post.save(function(err, post) {
       if(err){ return next(err); }
 
@@ -79,18 +87,9 @@ router.post('/posts/:post/comments', function(req, res, next) {
   });
 });
 
-//get specific post from db
-router.get('/posts/:post', function(req, res, next) {
-	console.log(req.post);
-	req.post.populate('comments', function(err,post) {
-		res.send(post);
-	})
-});
-
 //update upvotes on post
 router.put('/posts/:post/upvote', function(req, res, next) {
   req.post.upvote();
-
 
   req.post.save(function(err, post) {
     res.json(post);
@@ -105,6 +104,5 @@ router.put('/posts/:post/comments/:comment/upvote', function(req, res, next) {
     res.json(comment);
   });
 });
-
 
 module.exports = router;

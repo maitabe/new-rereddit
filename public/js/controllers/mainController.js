@@ -8,7 +8,7 @@ app.controller('MainCtrl', ['$scope','posts', function($scope, posts){
       title: $scope.title,
       link: $scope.link,
       upvotes: 0
-    }
+    };
 
     $scope.title = '';
     $scope.link = '';
@@ -17,12 +17,12 @@ app.controller('MainCtrl', ['$scope','posts', function($scope, posts){
     	console.log(data.data);
     	$scope.posts.push(data.data);
     }).catch(function(err){
-		console.error(err)
-    })
+		console.error(err);
+    });
 
-  }
+  };
 
   $scope.incrementUpvotes = function(item) {
     item.upvotes += 1;
-  }
+  };
 }]);

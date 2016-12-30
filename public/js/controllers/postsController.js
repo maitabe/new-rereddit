@@ -9,13 +9,13 @@ app.controller('PostsCtrl', ['$scope', '$stateParams', 'posts', function($scope,
        body: $scope.body,
        author: 'user',
        upvotes: 0
-    }
+    };
 
     posts.addComment($stateParams.id, newComment);
 
     $scope.body = '';
 
-  }
+  };
 
 
 }]);

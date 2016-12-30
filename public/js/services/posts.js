@@ -1,6 +1,7 @@
 app.factory('posts', ['$http', function($http) {
     var postService = {
       posts: [],
+      //fill up one post
       post: {},
 
       getAll: function() {
@@ -15,12 +16,11 @@ app.factory('posts', ['$http', function($http) {
       	return $http.get('/posts/' + id ).then(function(data) {
       		angular.copy(data.data, postService.post);
       		console.log(postService.post);
-      	})
+      	});
       },
 
       // for POSTing one new post
       create: function(post) {
-
       	return $http.post('/posts', post);
       },
 
@@ -33,7 +33,7 @@ app.factory('posts', ['$http', function($http) {
       addComment: function(id, comment) {
       	return $http.post('/posts/'+ id + '/comments', comment).then(function(data) {
       		console.log(data);
-
+          postService.post.comments.push(data.data);
       	});
       },
 
