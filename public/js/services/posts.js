@@ -25,8 +25,13 @@ app.factory('posts', ['$http', function($http) {
       },
 
       // for increasing the upvotes to one post
-      upvote: function(post) {
+      upvote: function(id, post) {
+        return $http.post('/posts/'+ id + '/upvote', post).then(function(data) {
 
+          postService.post.upvotes += 1;
+
+          console.log(postService.post.upvotes);
+        });
       },
 
       // for adding a comment to one post

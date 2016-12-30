@@ -89,6 +89,7 @@ router.post('/posts/:post/comments', function(req, res, next) {
 
 //update upvotes on post
 router.put('/posts/:post/upvote', function(req, res, next) {
+  console.log(req.post.upvote);
   req.post.upvote();
 
   req.post.save(function(err, post) {

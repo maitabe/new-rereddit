@@ -23,6 +23,12 @@ app.controller('MainCtrl', ['$scope','posts', function($scope, posts){
   };
 
   $scope.incrementUpvotes = function(item) {
+
     item.upvotes += 1;
+
+    console.log(item);
+    console.log(item.upvotes);
+
+    posts.upvote(item);
   };
 }]);
