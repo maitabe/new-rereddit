@@ -30,4 +30,15 @@ app.controller('MainCtrl', ['$scope','posts', function($scope, posts){
     // updating state
     posts.upvote(item);
   };
+
+  //increment upvotes for comments
+  $scope.incrementUpvotesComm = function(comment) {
+
+    // update DOM
+    comment.upvotes += 1;
+
+    // updating state
+    posts.upvoteComment(comment);
+  };
+
 }]);

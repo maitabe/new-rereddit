@@ -105,22 +105,42 @@ router.put('/posts/:post/upvote', function(req, res, next) {
  });
 
       //method to update the property of the existing object
-    // Post.update({_id: req.body._id},{upvotes: num}, function(err,affected) {
-    //     console.log('affected rows %d', affected);
-    // });
+  /*  Post.update({_id: req.body._id},{upvotes: num}, function(err,affected) {
+     console.log('affected rows %d', affected);
+     });
 
-  //   mPost.save(function(err, UpdatedPost) {
-  //  res.json(UpdatedPost);
-  // });
+     mPost.save(function(err, UpdatedPost) {
+     res.json(UpdatedPost);
+     });*/
+
 });
 
 //update upvotes on comments
-router.put('/posts/:post/comments/:comment/upvote', function(req, res, next) {
-  req.comment.upvote();
+router.put('/comments/:comment/upvote', function(req, res, next) {
 
-  req.comment.save(function(err, comment) {
-    res.json(comment);
-  });
+  //get comment from db
+    Comment.findById(req.params.comment, function(err, currentPostComm) {
+        // update property value in DB
+        currentPostComm.upvotes++;
+
+        // save changes to DB
+        currentPostComm.save(function(err){
+            if(err){console.error(err); res.send(false);}
+            else {res.send(true);}
+        })
+    });
+
+
+
+
+
+
+
+  //req.comment.upvote();
+
+  //req.comment.save(function(err, comment) {
+  //  res.json(comment);
+  //});
 });
 
 module.exports = router;

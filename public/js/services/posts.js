@@ -45,8 +45,10 @@ app.factory('posts', ['$http', function($http) {
       },
 
       // for upvoting a comment on a specific post
-      upvoteComment: function(post, comment) {
+      upvoteComment: function(comment) {
 
+          // send to server
+          return $http.put('/comments/'+ comment._id + '/upvote');
       }
     };
 
