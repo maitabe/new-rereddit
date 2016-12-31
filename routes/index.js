@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 
-//
+// db objects of mongoose
 var Post = require('.././models/Posts');
 var Comment = require('.././models/Comments');
 
@@ -89,12 +89,29 @@ router.post('/posts/:post/comments', function(req, res, next) {
 
 //update upvotes on post
 router.put('/posts/:post/upvote', function(req, res, next) {
-  console.log(req.post.upvote);
-  req.post.upvote();
+  // req.post.upvote();
 
-  req.post.save(function(err, post) {
-    res.json(post);
-  });
+  // find post in DB
+  Post.findById(req.body._id, function(err, currentDbPost){
+
+      // update property value in DB post obj
+      currentDbPost.upvotes++;
+
+      // save changes to DB
+       currentDbPost.save(function(err, currentDbPost){
+         if(err){console.error(err); res.send(false);}
+         else {res.send(true);}
+       });
+ });
+
+      //method to update the property of the existing object
+    // Post.update({_id: req.body._id},{upvotes: num}, function(err,affected) {
+    //     console.log('affected rows %d', affected);
+    // });
+
+  //   mPost.save(function(err, UpdatedPost) {
+  //  res.json(UpdatedPost);
+  // });
 });
 
 //update upvotes on comments

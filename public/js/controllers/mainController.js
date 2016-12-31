@@ -24,11 +24,10 @@ app.controller('MainCtrl', ['$scope','posts', function($scope, posts){
 
   $scope.incrementUpvotes = function(item) {
 
+    // update DOM
     item.upvotes += 1;
 
-    console.log(item);
-    console.log(item.upvotes);
-
+    // updating state
     posts.upvote(item);
   };
 }]);

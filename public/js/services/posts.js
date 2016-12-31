@@ -25,12 +25,14 @@ app.factory('posts', ['$http', function($http) {
       },
 
       // for increasing the upvotes to one post
-      upvote: function(id, post) {
-        return $http.post('/posts/'+ id + '/upvote', post).then(function(data) {
+      upvote: function(post) {
+        return $http.put('/posts/'+ post._id + '/upvote', post).then(function(res) {
 
-          postService.post.upvotes += 1;
+            console.log('updateSucceed =', res.data);
 
-          console.log(postService.post.upvotes);
+            if(!res.data){
+                console.error('upvote didnt succeed!' );
+            }
         });
       },
 
