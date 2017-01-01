@@ -32,13 +32,13 @@ app.controller('MainCtrl', ['$scope','posts', function($scope, posts){
   };
 
   //increment upvotes for comments
-  $scope.incrementUpvotesComm = function(comment) {
+  $scope.incrementUpvotesComm = function(post, comment) {
 
     // update DOM
     comment.upvotes += 1;
 
     // updating state
-    posts.upvoteComment(comment);
+    posts.upvoteComment(post, comment);
   };
 
 }]);

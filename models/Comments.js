@@ -7,6 +7,10 @@ var CommentSchema = new mongoose.Schema({
   post: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }]
 });
 
+CommentSchema.methods.upvote = function() {
+	return this.upvotes ++;
+};
+
 var Comment = mongoose.model('Comment', CommentSchema);
 
 module.exports = Comment;

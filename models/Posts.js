@@ -8,6 +8,12 @@ var PostSchema = new mongoose.Schema({
 
 });
 
+//define upvote method to be used from the index.js
+PostSchema.methods.upvote = function(){
+	return this.upvotes ++;
+};
+
+
 var Post = mongoose.model('Post', PostSchema);
 
 module.exports = Post;
